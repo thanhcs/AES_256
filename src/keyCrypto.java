@@ -4,4 +4,6 @@
 public class keyCrypto {
 
 
+    public keyCrypto(String key) {
+    }
 }
