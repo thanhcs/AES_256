@@ -10,17 +10,45 @@ public class AESEncrypt {
 
     public void encrypt() {
         subBytes();
+        shiftRows();
     }
 
     private void subBytes() {
         for (int i = 0; i < state[0].length; ++i) {
             for (int j = 0; j < state.length; ++j) {
-                char c = Constants.S[state[j][i] & 0xFF];
+                byte t = state[j][i];
+                char c = Constants.S[(t < 0) ? (t + 256) : t];
                 state[j][i] = (byte) c;
             }
         }
     }
 
+    private void shiftRows() {
+        byte temp0;
+        byte temp1;
+
+        // row 2
+        temp0 = state[1][0];
+        state[1][0] = state[1][1];
+        state[1][1] = state[1][2];
+        state[1][2] = state[1][3];
+        state[1][3] = temp0;
+
+        // row 3
+        temp0 = state[2][0];
+        temp1 = state[2][1];
+        state[2][0] = state[2][2];
+        state[2][1] = state[2][3];
+        state[2][2] = temp0;
+        state[2][3] = temp1;
+
+        // row 4
+        temp0 = state[3][3];
+        state[3][3] = state[3][2];
+        state[3][2] = state[3][1];
+        state[3][1] = state[3][0];
+        state[3][0] = temp0;
+    }
 
 
     // used for debug
