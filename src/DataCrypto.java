@@ -3,14 +3,14 @@
  */
 public class DataCrypto {
     private byte[][] state;
-    private keyCrypto keyObj;
+    private KeyExpansion keyObj;
 
 
     // constructor (parameter: string)
     // create object of class key (pass into: string key)
 
     public DataCrypto(String key) {
-        keyObj = new keyCrypto(key);
+        keyObj = new KeyExpansion(key);
         state = new byte[4][4];
         // initial state
         for (int i = 0; i < state[0].length; ++i) {
@@ -37,7 +37,7 @@ public class DataCrypto {
         setState(line);
         AESEncrypt e = new AESEncrypt(state);
         e.encrypt();
-        return e.printState();
+        return e.getState();
     }
 
 

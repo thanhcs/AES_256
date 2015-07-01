@@ -16,7 +16,12 @@ public class AES {
             String state = args[3];
 
             DataCrypto aes = new DataCrypto(key);
-            System.out.println(aes.encrypt(state));
+            aes.encrypt(state);
+
+            KeyExpansion keyExp = new KeyExpansion(key);
+            keyExp.keyExpansion(key);
+            System.out.println("Key Expansion: ");
+            keyExp.printState();
         }
 
         // parse command line
