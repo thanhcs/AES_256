@@ -10,7 +10,11 @@ public class AESEncrypt {
 
     public void encrypt() {
         subBytes();
+        System.out.println("after subBytes");
+        printState();
         shiftRows();
+        System.out.println("after shiftRows");
+        printState();
     }
 
     private void subBytes() {
@@ -50,9 +54,8 @@ public class AESEncrypt {
         state[3][0] = temp0;
     }
 
-
     // used for debug
-    public String printState() {
+    public String getState() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < state[0].length; ++i) {
             for (int j = 0; j < state.length; ++j) {
@@ -63,6 +66,12 @@ public class AESEncrypt {
             }
         }
         return sb.toString().toUpperCase();
+    }
+
+
+    // used for debug
+    public void printState() {
+        System.out.println(getState());
     }
 
 }
