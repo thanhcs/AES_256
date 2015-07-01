@@ -9,7 +9,7 @@ public class DataCrypto {
     // constructor (parameter: string)
     // create object of class key (pass into: string key)
 
-    DataCrypto(String key) {
+    public DataCrypto(String key) {
         keyObj = new keyCrypto(key);
         state = new byte[4][4];
         // initial state
@@ -21,15 +21,26 @@ public class DataCrypto {
     }
 
     // input the line containing state
-    public void setState(String line) {
+    private void setState(String line) {
         int num = 0;
         for (int i = 0; i < state[0].length; ++i) {
             for (int j = 0;j < state.length; ++j) {
                 String twoChars = line.substring(num, num += 2);
-                state[i][j] = Byte.valueOf(twoChars, 16);
+                state[j][i] =(byte) ((Character.digit(twoChars.charAt(0), 16) << 4)
+                        + Character.digit(twoChars.charAt(1), 16));
             }
         }
     }
+
+    // encrypt
+    public String encrypt(String line) {
+        setState(line);
+        AESEncrypt e = new AESEncrypt(state);
+        e.encrypt();
+        return e.printState();
+    }
+
+
 
 
 
@@ -40,9 +51,4 @@ public class DataCrypto {
     // addRoundKey <- roundKey by calling (object key).getRoundKey() type ???
     // same as decrypt
 
-    public void sam() {
-        if (AES.DEBUG) {
-
-        }
-    }
 }

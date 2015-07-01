@@ -16,7 +16,7 @@ public class AES {
             String state = args[3];
 
             DataCrypto aes = new DataCrypto(key);
-            aes.setState(state);
+            System.out.println(aes.encrypt(state));
         }
 
         // parse command line
@@ -24,7 +24,7 @@ public class AES {
         // encrypt or decrypt object (parameter String key)
 
         // call methode encrypt or decrypt
-        // object <- plaintext's line (block) -> cipher's line (block) -> file (*.enc or *.dec)
+        // object <- plaintext'S line (block) -> cipher'S line (block) -> file (*.enc or *.dec)
 
 
 
