@@ -3,19 +3,18 @@
  */
 public class KeyExpansion {
     Word[] keyExp;
-    public static int Nk = 8;
-    public static int Nr = 14;
-    public static int totalWords = 60;
 
     public KeyExpansion(String key) {
-        keyExp = new Word[totalWords];
+        keyExp = new Word[DataCrypto.totalWords];
         for (int i = 0; i < keyExp.length; ++i)
             keyExp[i] = new Word();
+
+        keyExpansion(key);
     }
 
     private void copyKey(String key) {
         int num = 0;
-        for (int i = 0; i < Nk; ++i) {
+        for (int i = 0; i < DataCrypto.Nk; ++i) {
             for (int j = 0; j < Constants.Nb; ++j) {
                 String twoChars = key.substring(num, num += 2);
                 byte t = (byte) ((Character.digit(twoChars.charAt(0), 16) << 4)
@@ -50,22 +49,24 @@ public class KeyExpansion {
         copyKey(key);
 
         Word temp;
-        for (int i = Nk; i < totalWords; ++i) {
+        for (int i = DataCrypto.Nk; i < DataCrypto.totalWords; ++i) {
             temp = keyExp[i-1];
-            if (i % Nk ==0) {
-                temp = subWord(rotWord(temp)).xor(getRcon(i/Nk));
+            if (i % DataCrypto.Nk ==0) {
+                temp = subWord(rotWord(temp)).xor(getRcon(i/ DataCrypto.Nk));
             }
-            else if (Nk > 6 && i % Nk == 4) {
+            else if (DataCrypto.Nk > 6 && i % DataCrypto.Nk == 4) {
                 temp = subWord(temp);
             }
 
-            keyExp[i] = keyExp[i - Nk].xor(temp);
+            keyExp[i] = keyExp[i - DataCrypto.Nk].xor(temp);
         }
     }
 
-    public void printState() {
+    // used for debug
+    // print key word by word
+    public void printKey() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < totalWords; ++i) {
+        for (int i = 0; i < DataCrypto.totalWords; ++i) {
             for (int j = 0; j < Constants.Nb; ++j) {
                 byte t = keyExp[i].get(j);
                 int tInt = (t < 0) ? (t + 256) : t;
@@ -74,7 +75,7 @@ public class KeyExpansion {
 
             }
             sb.append(" ");
-            if (i != 0 && (i + 1) % (Nr + 1) == 0) {
+            if (i != 0 && (i + 1) % (DataCrypto.Nr + 1) == 0) {
                 sb.append("\n");
             }
         }
