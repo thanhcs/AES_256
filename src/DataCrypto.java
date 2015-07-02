@@ -2,12 +2,14 @@
  * Created by thanhnguyencs on 6/29/15.
  */
 public class DataCrypto {
+
+    // variable used after indicating the mode
+    public static int Nk = 8;
+    public static int Nr = 14;
+    public static int totalWords = 60;
+
     private byte[][] state;
     private KeyExpansion keyObj;
-
-
-    // constructor (parameter: string)
-    // create object of class key (pass into: string key)
 
     public DataCrypto(String key) {
         keyObj = new KeyExpansion(key);
@@ -20,7 +22,7 @@ public class DataCrypto {
         }
     }
 
-    // input the line containing state
+    // input the line containing state into state 2d array
     private void setState(String line) {
         int num = 0;
         for (int i = 0; i < state[0].length; ++i) {
@@ -32,23 +34,23 @@ public class DataCrypto {
         }
     }
 
-    // encrypt
     public String encrypt(String line) {
         setState(line);
-        AESEncrypt e = new AESEncrypt(state);
-        e.encrypt();
+        AESEncrypt e = new AESEncrypt(state, keyObj);
+        if (AES.DEBUG)
+            e.encryptDB();
+        else
+            e.encrypt();
         return e.getState();
     }
 
-
-
-
-
-
-
-
-
-    // addRoundKey <- roundKey by calling (object key).getRoundKey() type ???
-    // same as decrypt
-
+    public String decrypt(String line) {
+        setState(line);
+        AESDecrypt d = new AESDecrypt(state, keyObj);
+        if (AES.DEBUG)
+            d.encryptDB();
+        else
+            d.encryptDB();
+        return d.getState();
+    }
 }

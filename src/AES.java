@@ -9,29 +9,26 @@ public class AES {
 
         if (args[0].equals("db")) {
             // debug mode. Command line: java AES db <d or e> <key> <one line of plaintext>
-            AES.DEBUG = true;
+            AES.DEBUG = false;
 
-            String mode = args[1];
+            String option = args[1];
             String key = args[2];
-            String state = args[3];
-
-            DataCrypto aes = new DataCrypto(key);
-            aes.encrypt(state);
-
-            KeyExpansion keyExp = new KeyExpansion(key);
-            keyExp.keyExpansion(key);
-            System.out.println("Key Expansion: ");
-            keyExp.printState();
+            String data = args[3];
+            if (option.equals("e")) {
+                DataCrypto aes = new DataCrypto(key);
+                String ret = aes.encrypt(data);
+                System.out.println();
+                System.out.println("Key: \n" + key);
+                System.out.println("Plaintext: \n" + data);
+                System.out.println("Cipher: \n" + ret);
+            } else if (option.equals("d")) {
+                DataCrypto aes = new DataCrypto(key);
+                String ret = aes.decrypt(data);
+                System.out.println();
+                System.out.println("Key: \n" + key);
+                System.out.println("Cipher: \n" + data);
+                System.out.println("Plaintext: \n" + ret);
+            }
         }
-
-        // parse command line
-
-        // encrypt or decrypt object (parameter String key)
-
-        // call methode encrypt or decrypt
-        // object <- plaintext'S line (block) -> cipher'S line (block) -> file (*.enc or *.dec)
-
-
-
     }
 }
