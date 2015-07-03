@@ -31,6 +31,7 @@ We finished all of the requirements
 java AES e keyFile testcase1
 java AES d keyFile testcase1.enc
 
+keyFile
 testcase1
 
 [Output of test 1]
@@ -42,6 +43,7 @@ testcase1.enc.dec
 java AES e keyFile testcase2
 java AES d keyFile testcase2.enc
 
+keyFile
 testcase2
 
 [Output of test 2]
@@ -54,6 +56,7 @@ testcase2.enc.dec
 java AES e keyFile testcase3
 java AES d keyFile testcase3.enc
 
+keyFile
 testcase3
 
 [Output of test 3]
@@ -65,6 +68,7 @@ testcase3.enc.dec
 java AES e keyFile testcase4
 java AES d keyFile testcase4.enc
 
+keyFile
 testcase4
 
 [Output of test 4]

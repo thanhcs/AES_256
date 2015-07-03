@@ -18,7 +18,7 @@ public class AES {
             String keyFile = args[1];
             String fileData = args[2];
             String key = getKey(keyFile);
-            if (!validateKey(key)) {
+            if (!validateInputLine(key)) {
                 throw new IllegalArgumentException("Key is malformed");
             }
             DataCrypto aes = new DataCrypto(key);
@@ -30,14 +30,18 @@ public class AES {
                 if (option.equals("e")) {
                     out = new PrintWriter(fileData + ".enc");
                     while ((line = in.readLine()) != null) {
-                        String ret = aes.encrypt(line);
-                        out.println(ret);
+                        if (validateInputLine(line)) {
+                            String ret = aes.encrypt(line);
+                            out.println(ret);
+                        }
                     }
                 } else if (option.equals("d")) {
                     out = new PrintWriter(fileData + ".dec");
                     while ((line = in.readLine()) != null) {
-                        String ret = aes.decrypt(line);
-                        out.println(ret);
+                        if (validateInputLine(line)) {
+                            String ret = aes.decrypt(line);
+                            out.println(ret);
+                        }
                     }
                 }
             } catch (FileNotFoundException e) {
@@ -71,19 +75,23 @@ public class AES {
         String option = args[1];
         String key = args[2];
         String data = args[3];
-        if (!validateKey(key)) {
+        if (!validateInputLine(key)) {
             throw new IllegalArgumentException("Key is malformed");
         }
         if (option.equals("e")) {
             DataCrypto aes = new DataCrypto(key);
-            String ret = aes.encrypt(data);
+            String ret = "";
+            if (validateInputLine(data))
+                ret = aes.encrypt(data);
             System.out.println();
             System.out.println("Key: \n" + key);
             System.out.println("Plaintext: \n" + data);
             System.out.println("Cipher: \n" + ret);
         } else if (option.equals("d")) {
             DataCrypto aes = new DataCrypto(key);
-            String ret = aes.decrypt(data);
+            String ret = "";
+            if (validateInputLine(data))
+                ret = aes.decrypt(data);
             System.out.println();
             System.out.println("Key: \n" + key);
             System.out.println("Cipher: \n" + data);
@@ -91,7 +99,7 @@ public class AES {
         }
     }
 
-    private static boolean validateKey(String key) {
+    private static boolean validateInputLine(String key) {
         for (int i = 0; i < 256 && i < key.length(); ++i) {  // hard code 256
             char c = key.charAt(i);
             boolean t = ((c >= '0' && c <= '9') ||
