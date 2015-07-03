@@ -56,6 +56,4 @@ public class AESCrypto {
     void printState() {
         System.out.println(getState());
     }
-
-
 }

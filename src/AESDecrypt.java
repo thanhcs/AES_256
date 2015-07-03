@@ -50,6 +50,19 @@ public class AESDecrypt extends AESCrypto{
         }
     }
 
+    public void encrypt() {
+        addRoundKey(DataCrypto.Nr);
+        for (int i = DataCrypto.Nr - 1; 0 < i ; --i) {
+            invShiftRows();
+            invSubBytes();
+            addRoundKey(i);
+            mixColumn();
+        }
+        invShiftRows();
+        invSubBytes();
+        addRoundKey(0);
+    }
+
 
     // ------------- End of professor's code -------------------------- //
 
