@@ -50,7 +50,7 @@ public class DataCrypto {
         if (AES.DEBUG)
             d.encryptDB();
         else
-            d.encryptDB();
+            d.encrypt();
         return d.getState();
     }
 }
