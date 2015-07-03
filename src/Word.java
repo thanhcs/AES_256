@@ -8,6 +8,10 @@ public class Word {
     public Word() {
         count = 0;
         data = new byte[Constants.Nb];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = 0;
+        }
+
     }
 
     public Word(byte[] t) {
