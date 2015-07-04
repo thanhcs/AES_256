@@ -15,19 +15,19 @@ public class KeyExpansion {
     private void copyKey(String key) {
         int num = 0;
         boolean flag = true; // variable used to stop the loops
-        for (int i = 0; i < DataCrypto.Nk && flag; ++i) {
+        for (int i = 0; i < DataCryptoECB.Nk && flag; ++i) {
             for (int j = 0; j < Constants.Nb && flag; ++j) {
-                String twoChars = key.substring(num, num += 2);
-                byte t = (byte) ((Character.digit(twoChars.charAt(0), 16) << 4)
-                        + Character.digit(twoChars.charAt(1), 16));
-                keyExp[i].add(t);
-
                 // handle the case when the key string longer or shorter than expected.
                 if (key.length() == num) {
                     flag = false;
-                }
-                if (key.length() == num + 1) {
-                    key = key.concat("0");
+                } else {
+                    if (key.length() == num + 1) {
+                        key = key.concat("0");
+                    }
+                    String twoChars = key.substring(num, num += 2);
+                    byte t = (byte) ((Character.digit(twoChars.charAt(0), 16) << 4)
+                            + Character.digit(twoChars.charAt(1), 16));
+                    keyExp[i].add(t);
                 }
             }
         }
@@ -58,16 +58,16 @@ public class KeyExpansion {
         copyKey(key);
 
         Word temp;
-        for (int i = DataCrypto.Nk; i < DataCrypto.totalWords; ++i) {
+        for (int i = DataCryptoECB.Nk; i < DataCryptoECB.totalWords; ++i) {
             temp = keyExp[i-1];
-            if (i % DataCrypto.Nk ==0) {
-                temp = subWord(rotWord(temp)).xor(getRcon(i/ DataCrypto.Nk));
+            if (i % DataCryptoECB.Nk ==0) {
+                temp = subWord(rotWord(temp)).xor(getRcon(i/ DataCryptoECB.Nk));
             }
-            else if (DataCrypto.Nk > 6 && i % DataCrypto.Nk == 4) {
+            else if (DataCryptoECB.Nk > 6 && i % DataCryptoECB.Nk == 4) {
                 temp = subWord(temp);
             }
 
-            keyExp[i] = keyExp[i - DataCrypto.Nk].xor(temp);
+            keyExp[i] = keyExp[i - DataCryptoECB.Nk].xor(temp);
         }
     }
 
@@ -75,7 +75,7 @@ public class KeyExpansion {
     // print key word by word
     public void printKey() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < DataCrypto.totalWords; ++i) {
+        for (int i = 0; i < DataCryptoECB.totalWords; ++i) {
             for (int j = 0; j < Constants.Nb; ++j) {
                 byte t = keyExp[i].get(j);
                 int tInt = (t < 0) ? (t + 256) : t;
@@ -84,7 +84,7 @@ public class KeyExpansion {
 
             }
             sb.append(" ");
-            if (i != 0 && (i + 1) % (DataCrypto.Nr + 1) == 0) {
+            if (i != 0 && (i + 1) % (DataCryptoECB.Nr + 1) == 0) {
                 sb.append("\n");
             }
         }

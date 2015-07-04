@@ -3,18 +3,31 @@
  */
 public class AESCrypto {
 
-    byte[][] state;
-    KeyExpansion keyObj;
+    protected byte[][] state;
+    protected KeyExpansion keyObj;
+    protected static byte[][] CBCVector = new byte[4][4];
 
     AESCrypto(byte[][] state, KeyExpansion key) {
         this.state = state;
         keyObj = key;
     }
 
+    public static void setCBCVector(byte[][] vector) {
+        CBCVector = vector;
+    }
+
     public void addRoundKey(int round) {
         for (int i = 0; i < state[0].length; ++i) {
             for (int j = 0; j < state.length; ++j) {
                 state[j][i] = (byte) (state[j][i] ^ keyObj.keyExp[round*Constants.Nb+i].get(j));
+            }
+        }
+    }
+
+    public void addCBCVector() {
+        for (int i = 0; i < state[0].length; ++i) {
+            for (int j = 0; j < state.length; ++j) {
+                state[j][i] = (byte) (state[j][i] ^ CBCVector[j][i]);
             }
         }
     }
@@ -35,6 +48,16 @@ public class AESCrypto {
     } // mul
 
     // ------------- End of professor's code -------------------------- //
+
+    protected byte[][] copyState() {
+        byte[][] temp = new byte[4][4];
+        for (int i = 0; i < state[0].length; ++i) {
+            for (int j = 0; j < state.length; ++j) {
+                temp[j][i] = state[j][i];
+            }
+        }
+        return temp;
+    }
 
 
     String getState() {

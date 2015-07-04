@@ -16,7 +16,6 @@ public class AESEncrypt extends AESCrypto{
             mixColumn();
             addRoundKey(i);
         }
-
         subBytes();
         shiftRows();
         addRoundKey(DataCrypto.Nr);
@@ -101,7 +100,7 @@ public class AESEncrypt extends AESCrypto{
         addRoundKey(0);
         System.out.println("After addRoundKey(" + 0 + "):");
         printState();
-        for (int i = 1; i < DataCrypto.Nr; ++i) {
+        for (int i = 1; i < DataCryptoECB.Nr; ++i) {
             subBytes();
             System.out.println("After subBytes:");
             printState();
@@ -122,8 +121,8 @@ public class AESEncrypt extends AESCrypto{
         shiftRows();
         System.out.println("After shiftRows:");
         printState();
-        addRoundKey(DataCrypto.Nr);
-        System.out.println("After addRoundKey(" + DataCrypto.Nr + "):");
+        addRoundKey(DataCryptoECB.Nr);
+        System.out.println("After addRoundKey(" + DataCryptoECB.Nr + "):");
         printState();
 
         keyObj.printKey();

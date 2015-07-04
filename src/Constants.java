@@ -2,7 +2,7 @@
  * Created by thanhnguyencs on 6/30/15.
  */
 public final class Constants {
-    public static final int Nb = 4;
+    public static final int Nb = 4; // AES standard
 
 
     // prevent creating class object

@@ -50,9 +50,9 @@ public class AESDecrypt extends AESCrypto{
         }
     }
 
-    public void encrypt() {
-        addRoundKey(DataCrypto.Nr);
-        for (int i = DataCrypto.Nr - 1; 0 < i ; --i) {
+    public void decrypt() {
+        addRoundKey(DataCryptoECB.Nr);
+        for (int i = DataCryptoECB.Nr - 1; 0 < i ; --i) {
             invShiftRows();
             invSubBytes();
             addRoundKey(i);
@@ -81,12 +81,12 @@ public class AESDecrypt extends AESCrypto{
 
     // ------------- End of professor's code -------------------------- //
 
-    public void encryptDB() {
+    public void decryptDB() {
 
-        addRoundKey(DataCrypto.Nr);
-        System.out.println("After addRoundKey(" + DataCrypto.Nr + "):");
+        addRoundKey(DataCryptoECB.Nr);
+        System.out.println("After addRoundKey(" + DataCryptoECB.Nr + "):");
         printState();
-        for (int i = DataCrypto.Nr - 1; 0 < i ; --i) {
+        for (int i = DataCryptoECB.Nr - 1; 0 < i ; --i) {
             invShiftRows();
             System.out.println("After invShiftRows:");
             printState();
