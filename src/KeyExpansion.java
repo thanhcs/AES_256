@@ -17,17 +17,17 @@ public class KeyExpansion {
         boolean flag = true; // variable used to stop the loops
         for (int i = 0; i < DataCrypto.Nk && flag; ++i) {
             for (int j = 0; j < Constants.Nb && flag; ++j) {
-                String twoChars = key.substring(num, num += 2);
-                byte t = (byte) ((Character.digit(twoChars.charAt(0), 16) << 4)
-                        + Character.digit(twoChars.charAt(1), 16));
-                keyExp[i].add(t);
-
                 // handle the case when the key string longer or shorter than expected.
                 if (key.length() == num) {
                     flag = false;
-                }
-                if (key.length() == num + 1) {
-                    key = key.concat("0");
+                } else {
+                    if (key.length() == num + 1) {
+                        key = key.concat("0");
+                    }
+                    String twoChars = key.substring(num, num += 2);
+                    byte t = (byte) ((Character.digit(twoChars.charAt(0), 16) << 4)
+                            + Character.digit(twoChars.charAt(1), 16));
+                    keyExp[i].add(t);
                 }
             }
         }
